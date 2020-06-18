@@ -2,6 +2,8 @@ import React from 'react'
 import './index.css'
 
 import Item from './Item'
+import InfoItem from './InfoItem'
+
 
 const Items = [
     {
@@ -17,7 +19,21 @@ const Items = [
         'src': 'computer-showing.jpg'
     }
 ]
-const eachItemInterval = 3000
+const InfoItems = [
+    {
+        'index': 0,
+        'title': 'Title 1'
+    },
+    {
+        'index': 1,
+        'title': 'Title 2'
+    },
+    {
+        'index': 2,
+        'title': 'Title 3'
+    }
+]
+const eachItemInterval = 5000
 
 class Carousel extends React.Component {
     progressInterval = 0
@@ -29,6 +45,8 @@ class Carousel extends React.Component {
         this.state = {
             allItems: Items,
             currentItem: Items[0],
+            allInfoItems: InfoItems,
+            currentInfoItem: InfoItems[0]
         }
     }
 
@@ -48,7 +66,7 @@ class Carousel extends React.Component {
         this.clearProgress()
         this.clearIntervals()
     }
-    
+
     prevItem = () => {
         const newIndex = this.state.currentItem.index - 1
         const checkedValue = Items[newIndex] ? newIndex : Items.length - 1
@@ -56,7 +74,7 @@ class Carousel extends React.Component {
         this.setState({
             currentItem: Items[checkedValue]
         })
-        
+
         this.clearProgress()
         this.clearIntervals()
     }
@@ -69,11 +87,9 @@ class Carousel extends React.Component {
 
     clearProgress = () => {
         document.querySelector('.bar').style.width = '0%'
-        
+
         this.progressInterval = setInterval(() => {
-            this.c += (0.1 * 3.489)
-            console.log(this.c)
-            
+            this.c += (0.1 * 2.2)
             document.querySelector('.bar').style.width = `${this.c}%`
         }, 10)
     }
@@ -86,17 +102,32 @@ class Carousel extends React.Component {
     render() {
         return (
             <div className='carousel-container'>
-                <div className="carousel-items-container">
-                    <div className="carousel-items-wrapper" style={{
-                        'transform': `translateX(
-                            -${this.state.currentItem.index * 100}%
-                        )`
-                    }}>
-                        {
-                            this.state.allItems.map(
-                                item => <Item key={item.index} data={item} />
-                            )
-                        }
+                <div className="items-container">
+                    <div className="images-container">
+                        <div className="images-wrapper" style={{
+                            'transform': `translateX(
+                                -${this.state.currentItem.index * 100}%
+                            )`
+                        }}>
+                            {
+                                this.state.allItems.map(
+                                    item => <Item key={item.index} data={item} />
+                                )
+                            }
+                        </div>
+                    </div>
+                    <div className="info-container">
+                        <div className="info-wrapper" style={{
+                            'transform': `translateY(
+                                -${this.state.currentItem.index * 100}%
+                            )`
+                        }}>
+                            {
+                                this.state.allInfoItems.map(
+                                    infoItem => <InfoItem key={infoItem.index} data={infoItem} />
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
 
